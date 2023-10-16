@@ -23,6 +23,7 @@ if transformers.__version__.startswith("4"):
     from transformers import AdamW
     from transformers import BertTokenizer
     from transformers import RobertaTokenizer
+    from transformers import GeoLMConfig, GeoLMModel
 else:
     from transformers.modeling_bert import BertConfig, BertModel
     from transformers.optimization import AdamW
@@ -36,25 +37,47 @@ from .reader import Reader
 logger = logging.getLogger(__name__)
 
 
-def get_bert_biencoder_components(cfg, inference_only: bool = False, **kwargs):
+
+def get_hf_biencoder_components(backbone, cfg, inference_only: bool = False, **kwargs):
     dropout = cfg.encoder.dropout if hasattr(cfg.encoder, "dropout") else 0.0
-    question_encoder = HFBertEncoder.init_encoder(
-        cfg.encoder.pretrained_model_cfg,
-        projection_dim=cfg.encoder.projection_dim,
-        dropout=dropout,
-        pretrained=cfg.encoder.pretrained,
-        **kwargs
-    )
-    ctx_encoder = HFBertEncoder.init_encoder(
-        cfg.encoder.pretrained_model_cfg,
-        projection_dim=cfg.encoder.projection_dim,
-        dropout=dropout,
-        pretrained=cfg.encoder.pretrained,
-        **kwargs
-    )
+
+    if backbone == 'bert':
+
+        question_encoder = HFBertEncoder.init_encoder(
+            cfg.encoder.pretrained_model_cfg,
+            projection_dim=cfg.encoder.projection_dim,
+            dropout=dropout,
+            pretrained=cfg.encoder.pretrained,
+            **kwargs
+        )
+        ctx_encoder = HFBertEncoder.init_encoder(
+            cfg.encoder.pretrained_model_cfg,
+            projection_dim=cfg.encoder.projection_dim,
+            dropout=dropout,
+            pretrained=cfg.encoder.pretrained,
+            **kwargs
+        )
+    
+    elif backbone == 'geolm':
+        question_encoder = HFGeoLMEncoder.init_encoder(
+            cfg.encoder.pretrained_model_cfg,
+            projection_dim=cfg.encoder.projection_dim,
+            dropout=dropout,
+            pretrained=cfg.encoder.pretrained,
+            **kwargs
+        )
+        ctx_encoder = HFGeoLMEncoder.init_encoder(
+            cfg.encoder.pretrained_model_cfg,
+            projection_dim=cfg.encoder.projection_dim,
+            dropout=dropout,
+            pretrained=cfg.encoder.pretrained,
+            **kwargs
+        )
+    else:
+        raise NotImplementedError
 
     fix_ctx_encoder = cfg.encoder.fix_ctx_encoder if hasattr(cfg.encoder, "fix_ctx_encoder") else False
-    biencoder = BiEncoder(question_encoder, ctx_encoder, fix_ctx_encoder=fix_ctx_encoder)
+    biencoder = BiEncoder(question_encoder, ctx_encoder, fix_ctx_encoder=fix_ctx_encoder, use_spatial_position = False)
 
     optimizer = (
         get_optimizer(
@@ -194,6 +217,88 @@ def get_bert_tokenizer(pretrained_cfg_name: str, do_lower_case: bool = True):
 def get_roberta_tokenizer(pretrained_cfg_name: str, do_lower_case: bool = True):
     # still uses HF code for tokenizer since they are the same
     return RobertaTokenizer.from_pretrained(pretrained_cfg_name, do_lower_case=do_lower_case)
+
+
+class HFGeoLMEncoder(GeoLMModel):
+    def __init__(self, config, project_dim: int = 0):
+        GeoLMModel.__init__(self, config)
+        assert config.hidden_size > 0, "Encoder hidden_size can't be zero"
+        self.encode_proj = nn.Linear(config.hidden_size, project_dim) if project_dim != 0 else None
+        self.init_weights()
+
+    @classmethod
+    def init_encoder(
+        cls, cfg_name: str, projection_dim: int = 0, dropout: float = 0.1, pretrained: bool = True, **kwargs
+    ) -> GeoLMModel:
+        logger.info("Initializing HF GeoLM Encoder. cfg_name=%s", cfg_name)
+        cfg = GeoLMConfig.from_pretrained(cfg_name if cfg_name else "geolm-base-cased")
+        if dropout != 0:
+            cfg.attention_probs_dropout_prob = dropout
+            cfg.hidden_dropout_prob = dropout
+
+        if pretrained:
+            return cls.from_pretrained(cfg_name, config=cfg, project_dim=projection_dim, **kwargs)
+        else:
+            return HFGeoLMEncoder(cfg, project_dim=projection_dim)
+
+    def forward(
+        self,
+        input_ids: T,
+        token_type_ids: T,
+        attention_mask: T,
+        spatial_position_list_x = None,
+        spatial_position_list_y = None,
+        representation_token_pos=0,
+    ) -> Tuple[T, ...]:
+
+        out = super().forward(
+            input_ids=input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=attention_mask,
+            spatial_position_list_x = spatial_position_list_x, 
+            spatial_position_list_y = spatial_position_list_y
+        )
+
+        # HF >4.0 version support
+        if transformers.__version__.startswith("4") and isinstance(
+            out,
+            transformers.modeling_outputs.BaseModelOutputWithPoolingAndCrossAttentions,
+        ):
+            sequence_output = out.last_hidden_state
+            pooled_output = None
+            hidden_states = out.hidden_states
+
+        elif self.config.output_hidden_states:
+            sequence_output, pooled_output, hidden_states = out
+        else:
+            hidden_states = None
+            out = super().forward(
+                input_ids=input_ids,
+                token_type_ids=token_type_ids,
+                attention_mask=attention_mask,
+                spatial_position_list_x = spatial_position_list_x, 
+                spatial_position_list_y = spatial_position_list_y
+            )
+            sequence_output, pooled_output = out
+
+        if isinstance(representation_token_pos, int):
+            pooled_output = sequence_output[:, representation_token_pos, :]
+        else:  # treat as a tensor
+            bsz = sequence_output.size(0)
+            assert representation_token_pos.size(0) == bsz, "query bsz={} while representation_token_pos bsz={}".format(
+                bsz, representation_token_pos.size(0)
+            )
+            pooled_output = torch.stack([sequence_output[i, representation_token_pos[i, 1], :] for i in range(bsz)])
+
+        if self.encode_proj:
+            pooled_output = self.encode_proj(pooled_output)
+        return sequence_output, pooled_output, hidden_states
+
+    # TODO: make a super class for all encoders
+    def get_out_size(self):
+        if self.encode_proj:
+            return self.encode_proj.out_features
+        return self.config.hidden_size
 
 
 class HFBertEncoder(BertModel):

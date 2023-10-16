@@ -15,9 +15,18 @@ import importlib
 def init_hf_bert_biencoder(args, **kwargs):
     if importlib.util.find_spec("transformers") is None:
         raise RuntimeError("Please install transformers lib")
-    from .hf_models import get_bert_biencoder_components
+    from .hf_models import get_hf_biencoder_components
 
-    return get_bert_biencoder_components(args, **kwargs)
+    return get_hf_biencoder_components('bert', args, **kwargs) # call with bert backbone
+
+
+def init_hf_geolm_biencoder(args, **kwargs):
+    if importlib.util.find_spec("transformers") is None:
+        raise RuntimeError("Please install transformers lib")
+    from .hf_models import get_hf_biencoder_components
+
+    return get_hf_biencoder_components('geolm', args, **kwargs) # call with geolm backbone
+
 
 
 def init_hf_bert_reader(args, **kwargs):
@@ -63,6 +72,7 @@ BIENCODER_INITIALIZERS = {
     "hf_bert": init_hf_bert_biencoder,
     "pytext_bert": init_pytext_bert_biencoder,
     "fairseq_roberta": init_fairseq_roberta_biencoder,
+    'hf_geolm': init_hf_geolm_biencoder, 
 }
 
 READER_INITIALIZERS = {

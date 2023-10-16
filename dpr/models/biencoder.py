@@ -23,6 +23,7 @@ from torch import nn
 from dpr.data.biencoder_data import BiEncoderSample
 from dpr.utils.data_utils import Tensorizer
 from dpr.utils.model_utils import CheckpointState
+import pdb
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +32,12 @@ BiEncoderBatch = collections.namedtuple(
     [
         "question_ids",
         "question_segments",
+        # "question_spatial_position_list_x",
+        # "question_spatial_position_list_y",
         "context_ids",
         "ctx_segments",
+        # "ctx_spatial_position_list_x",
+        # "ctx_spatial_position_list_y",
         "is_positive",
         "hard_negatives",
         "encoder_type",
@@ -68,12 +73,55 @@ class BiEncoder(nn.Module):
         ctx_model: nn.Module,
         fix_q_encoder: bool = False,
         fix_ctx_encoder: bool = False,
+        use_spatial_position: bool = False, 
     ):
         super(BiEncoder, self).__init__()
         self.question_model = question_model
         self.ctx_model = ctx_model
         self.fix_q_encoder = fix_q_encoder
         self.fix_ctx_encoder = fix_ctx_encoder
+        self.use_spatial_position = use_spatial_position
+
+    @staticmethod
+    def get_representation_with_spatial_position(
+        sub_model: nn.Module,
+        ids: T,
+        segments: T,
+        attn_mask: T,
+        spatial_position_list_x = None, 
+        spatial_position_list_y = None, 
+        fix_encoder: bool = False,
+        representation_token_pos=0,
+    ) -> (T, T, T):
+        sequence_output = None
+        pooled_output = None
+        hidden_states = None
+        if ids is not None:
+            if fix_encoder:
+                with torch.no_grad():
+                    sequence_output, pooled_output, hidden_states = sub_model(
+                        ids,
+                        segments,
+                        attn_mask,
+                        spatial_position_list_x = spatial_position_list_x, 
+                        spatial_position_list_y = spatial_position_list_y, 
+                        representation_token_pos=representation_token_pos,
+                    )
+
+                if sub_model.training:
+                    sequence_output.requires_grad_(requires_grad=True)
+                    pooled_output.requires_grad_(requires_grad=True)
+            else:
+                sequence_output, pooled_output, hidden_states = sub_model(
+                    ids,
+                    segments,
+                    attn_mask,
+                    spatial_position_list_x = spatial_position_list_x, 
+                    spatial_position_list_y = spatial_position_list_y, 
+                    representation_token_pos=representation_token_pos,
+                )
+
+        return sequence_output, pooled_output, hidden_states
 
     @staticmethod
     def get_representation(
@@ -118,22 +166,43 @@ class BiEncoder(nn.Module):
         context_ids: T,
         ctx_segments: T,
         ctx_attn_mask: T,
+        question_spatial_position_list_x = None, 
+        question_spatial_position_list_y = None, 
+        ctx_spatial_position_list_x = None, 
+        ctx_spatial_position_list_y = None,
         encoder_type: str = None,
         representation_token_pos=0,
     ) -> Tuple[T, T]:
         q_encoder = self.question_model if encoder_type is None or encoder_type == "question" else self.ctx_model
-        _q_seq, q_pooled_out, _q_hidden = self.get_representation(
-            q_encoder,
-            question_ids,
-            question_segments,
-            question_attn_mask,
-            self.fix_q_encoder,
-            representation_token_pos=representation_token_pos,
-        )
+        if self.use_spatial_position:
+            _q_seq, q_pooled_out, _q_hidden = self.get_representation_with_spatial_position(
+                q_encoder,
+                question_ids,
+                question_segments,
+                question_attn_mask,
+                question_spatial_position_list_x, 
+                question_spatial_position_list_y, 
+                self.fix_q_encoder,
+                representation_token_pos=representation_token_pos,
+            )
+        else:
+            _q_seq, q_pooled_out, _q_hidden = self.get_representation(
+                q_encoder,
+                question_ids,
+                question_segments,
+                question_attn_mask,
+                self.fix_q_encoder,
+                representation_token_pos=representation_token_pos,
+            )
 
         ctx_encoder = self.ctx_model if encoder_type is None or encoder_type == "ctx" else self.question_model
-        _ctx_seq, ctx_pooled_out, _ctx_hidden = self.get_representation(
-            ctx_encoder, context_ids, ctx_segments, ctx_attn_mask, self.fix_ctx_encoder
+        if self.use_spatial_position:
+            _ctx_seq, ctx_pooled_out, _ctx_hidden = self.get_representation_with_spatial_position(
+                ctx_encoder, context_ids, ctx_segments, ctx_attn_mask, ctx_spatial_position_list_x, ctx_spatial_position_list_y, self.fix_ctx_encoder
+            )
+        else:
+            _ctx_seq, ctx_pooled_out, _ctx_hidden = self.get_representation(
+            ctx_encoder, context_ids, ctx_segments, ctx_attn_mask,  self.fix_ctx_encoder
         )
 
         return q_pooled_out, ctx_pooled_out
@@ -233,8 +302,12 @@ class BiEncoder(nn.Module):
         return BiEncoderBatch(
             questions_tensor,
             question_segments,
+            # question_spatial_position_list_x, 
+            # question_spatial_position_list_y, 
             ctxs_tensor,
             ctx_segments,
+            # ctx_spatial_position_list_x, 
+            # ctx_spatial_position_list_y, 
             positive_ctx_indices,
             hard_neg_ctx_indices,
             "question",
