@@ -4,3 +4,7 @@ dpr_wiki:
   _target_: dpr.data.retriever_data.CsvCtxSrc
   file: data.wikipedia_split.psgs_w100
   id_prefix: 'wiki:'
+
+mapqa_ctx:
+  _target_: dpr.data.retriever_data.CsvCtxSrc
+  file: '/home/zekun/mapqa/DPR/downloads/data/mapqa/mapqa_ctx.tsv'

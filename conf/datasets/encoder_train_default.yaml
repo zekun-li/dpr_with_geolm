@@ -1,5 +1,9 @@
 # @package _group_
 
+mapqa_test:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: 
+
 nq_train:
   _target_: dpr.data.biencoder_data.JsonQADataset
   file: data.retriever.nq-train

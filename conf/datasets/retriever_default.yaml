@@ -1,5 +1,9 @@
 # @package _group_
 
+mapqa_test:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test.csv'
+
 nq_test:
   _target_: dpr.data.retriever_data.CsvQASrc
   file: data.retriever.qas.nq-test

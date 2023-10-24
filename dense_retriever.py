@@ -84,13 +84,12 @@ def generate_question_vectors(
             # q_seg_batch = torch.zeros_like(q_ids_batch).cuda()
             # q_attn_mask = tensorizer.get_attn_mask(q_ids_batch)
 
-            q_ids_batch = torch.stack(batch_tensors, dim=0).cuda()
-            q_seg_batch = torch.zeros_like(q_ids_batch).cuda()
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+            q_ids_batch = torch.stack(batch_tensors, dim=0).to(device)
+            q_seg_batch = torch.zeros_like(q_ids_batch).to(device)
             q_attn_mask = tensorizer.get_attn_mask(q_ids_batch)
 
-            
-            ctx_vectors.to(local_q_vector.device
-            
 
             if selector:
                 rep_positions = selector.get_positions(q_ids_batch, tensorizer)
@@ -566,6 +565,7 @@ def main(cfg: DictConfig):
         # send data for indexing
         id_prefixes = []
         ctx_sources = []
+
         for ctx_src in cfg.ctx_datatsets:
             ctx_src = hydra.utils.instantiate(cfg.ctx_sources[ctx_src])
             id_prefixes.append(ctx_src.id_prefix)
