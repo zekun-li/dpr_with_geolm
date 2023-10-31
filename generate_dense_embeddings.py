@@ -84,13 +84,14 @@ def gen_ctx_vectors(
 @hydra.main(config_path="conf", config_name="gen_embs")
 def main(cfg: DictConfig):
 
-    assert cfg.model_file, "Please specify encoder checkpoint as model_file param"
+   #  assert cfg.model_file, "Please specify encoder checkpoint as model_file param"
     assert cfg.ctx_src, "Please specify passages source as ctx_src param"
 
     cfg = setup_cfg_gpu(cfg)
 
-    saved_state = load_states_from_checkpoint(cfg.model_file)
-    set_cfg_params_from_state(saved_state.encoder_params, cfg)
+    if cfg.model_file:
+        saved_state = load_states_from_checkpoint(cfg.model_file)
+        set_cfg_params_from_state(saved_state.encoder_params, cfg)
 
     logger.info("CFG:")
     logger.info("%s", OmegaConf.to_yaml(cfg))
@@ -112,14 +113,18 @@ def main(cfg: DictConfig):
 
     # load weights from the model file
     model_to_load = get_model_obj(encoder)
-    logger.info("Loading saved model state ...")
-    logger.debug("saved model keys =%s", saved_state.model_dict.keys())
 
-    prefix_len = len("ctx_model.")
-    ctx_state = {
-        key[prefix_len:]: value for (key, value) in saved_state.model_dict.items() if key.startswith("ctx_model.")
-    }
-    model_to_load.load_state_dict(ctx_state, strict=False)
+    if cfg.model_file:
+        
+
+        logger.info("Loading saved model state ...")
+        logger.debug("saved model keys =%s", saved_state.model_dict.keys())
+
+        prefix_len = len("ctx_model.")
+        ctx_state = {
+            key[prefix_len:]: value for (key, value) in saved_state.model_dict.items() if key.startswith("ctx_model.")
+        }
+        model_to_load.load_state_dict(ctx_state, strict=False)
 
     logger.info("reading data source: %s", cfg.ctx_src)
 

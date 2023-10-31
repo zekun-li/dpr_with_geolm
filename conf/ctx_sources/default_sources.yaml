@@ -8,3 +8,7 @@ dpr_wiki:
 mapqa_ctx:
   _target_: dpr.data.retriever_data.CsvCtxSrc
   file: '/home/zekun/mapqa/DPR/downloads/data/mapqa/mapqa_ctx.tsv'
+
+mapqa_ctx_mal:
+  _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+  file: '/home/zekun/mapqa/data/entities_db.tsv'

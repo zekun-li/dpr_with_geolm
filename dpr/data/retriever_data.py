@@ -286,6 +286,19 @@ class CsvCtxSrc(RetrieverData):
                     passage = normalize_passage(passage)
                 ctxs[sample_id] = BiEncoderPassage(passage, row[self.title_col])
 
+class MapQACsvCtxSrc(CsvCtxSrc):
+    def __init__(
+        self,
+        file: str,
+        id_col: int = 1,
+        text_col: int = 2,
+        title_col: int = 5,
+        id_prefix: str = None,
+        normalize: bool = False,
+    ):
+        super().__init__(file, id_col, text_col, title_col, id_prefix, normalize=normalize)
+
+
 
 class KiltCsvCtxSrc(CsvCtxSrc):
     def __init__(

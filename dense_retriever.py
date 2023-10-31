@@ -180,6 +180,8 @@ class LocalFaissRetriever(DenseRetriever):
         :return:
         """
         time0 = time.time()
+        import pdb
+        pdb.set_trace()
         results = self.index.search_knn(query_vectors, top_docs)
         logger.info("index search time: %f sec.", time.time() - time0)
         self.index = None
@@ -479,17 +481,18 @@ def get_all_passages(ctx_sources):
 @hydra.main(config_path="conf", config_name="dense_retriever")
 def main(cfg: DictConfig):
     cfg = setup_cfg_gpu(cfg)
-    saved_state = load_states_from_checkpoint(cfg.model_file)
-
-    set_cfg_params_from_state(saved_state.encoder_params, cfg)
+    if cfg.model_file:
+        saved_state = load_states_from_checkpoint(cfg.model_file)
+        set_cfg_params_from_state(saved_state.encoder_params, cfg)
 
     logger.info("CFG (after gpu  configuration):")
     logger.info("%s", OmegaConf.to_yaml(cfg))
 
     tensorizer, encoder, _ = init_biencoder_components(cfg.encoder.encoder_model_type, cfg, inference_only=True)
 
-    logger.info("Loading saved model state ...")
-    encoder.load_state(saved_state, strict=False)
+    if cfg.model_file:
+        logger.info("Loading saved model state ...")
+        encoder.load_state(saved_state, strict=False)
 
     encoder_path = cfg.encoder_path
     if encoder_path:
