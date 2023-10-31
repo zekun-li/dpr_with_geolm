@@ -1,13 +1,17 @@
 # @package _group_
 
 # model type. One of [hf_bert, pytext_bert, fairseq_roberta, hf_geolm]
-encoder_model_type: hf_bert
-# # HuggingFace's config name for model initialization
-pretrained_model_cfg: bert-base-uncased 
+
+# encoder_model_type: hf_bert
+# # # HuggingFace's config name for model initialization
+# pretrained_model_cfg: bert-base-uncased 
 
 
 # encoder_model_type: hf_geolm
 # pretrained_model_cfg: zekun-li/geolm-base-cased
+
+encoder_model_type: 
+pretrained_model_cfg: 
 
 # Some encoders need to be initialized from a file
 pretrained_file:
