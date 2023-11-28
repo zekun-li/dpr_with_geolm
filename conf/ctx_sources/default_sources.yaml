@@ -12,3 +12,7 @@ mapqa_ctx:
 mapqa_ctx_mal:
   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
   file: '/home/zekun/mapqa/data/entities_db.tsv'
+
+mapqa_ctx_mal_1127:
+  _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+  file: '/home/zekun/mapqa/data/1127/entities_new.csv'

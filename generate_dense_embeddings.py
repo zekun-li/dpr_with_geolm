@@ -51,6 +51,7 @@ def gen_ctx_vectors(
     results = []
     for j, batch_start in enumerate(range(0, n, bsz)):
         batch = ctx_rows[batch_start : batch_start + bsz]
+
         batch_token_tensors = [
             tensorizer.text_to_tensor(ctx[1].text, title=ctx[1].title if insert_title else None) for ctx in batch
         ]
@@ -116,7 +117,6 @@ def main(cfg: DictConfig):
 
     if cfg.model_file:
         
-
         logger.info("Loading saved model state ...")
         logger.debug("saved model keys =%s", saved_state.model_dict.keys())
 

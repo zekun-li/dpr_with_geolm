@@ -89,7 +89,9 @@ class JsonQADataset(Dataset):
             if ctxs:
                 positive_ctxs = ctxs
 
-        negative_ctxs = json_sample["negative_ctxs"] if "negative_ctxs" in json_sample else []
+        # negative_ctxs = json_sample["negative_ctxs"] if "negative_ctxs" in json_sample else []
+
+        negative_ctxs = json_sample["negative_ctxs"] if "negative_ctxs" in json_sample else json_sample["hard_negative_ctxs"]
         hard_negative_ctxs = json_sample["hard_negative_ctxs"] if "hard_negative_ctxs" in json_sample else []
 
         for ctx in positive_ctxs + negative_ctxs + hard_negative_ctxs:

@@ -2,12 +2,17 @@
 
 mapqa_test:
   _target_: dpr.data.retriever_data.CsvQASrc
-  file: '/home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test.csv'
+  file: '/home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv'
+
+# mapqa_test:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/1127/entities_new.csv' # not right file
 
 nq_test:
   _target_: dpr.data.retriever_data.CsvQASrc
   file: data.retriever.qas.nq-test
   #query_special_suffix: '?'
+  
 
 nq_train:
   _target_: dpr.data.retriever_data.CsvQASrc

@@ -198,6 +198,7 @@ class BiEncoderTrainer(object):
     def validate_and_save(self, epoch: int, iteration: int, scheduler):
         cfg = self.cfg
         # for distributed mode, save checkpoint for only one process
+
         save_cp = cfg.local_rank in [-1, 0]
 
         if epoch == cfg.val_av_rank_start_epoch:
@@ -700,12 +701,12 @@ def _do_biencoder_fwd_pass(
 
     if model.training:
         model_out = model(
-            input.question_ids,
-            input.question_segments,
-            q_attn_mask,
-            input.context_ids,
-            input.ctx_segments,
-            ctx_attn_mask,
+            question_ids = input.question_ids,
+            question_segments = input.question_segments,
+            question_attn_mask = q_attn_mask,
+            context_ids = input.context_ids,
+            ctx_segments = input.ctx_segments,
+            ctx_attn_mask = ctx_attn_mask,
             encoder_type=encoder_type,
             representation_token_pos=rep_positions,
         )

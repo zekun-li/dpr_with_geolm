@@ -1,8 +1,22 @@
 # @package _group_
 
-mapqa_test:
+
+
+mapqa_train_1127:
   _target_: dpr.data.biencoder_data.JsonQADataset
-  file: 
+  file: '/home/zekun/mapqa/data/1127/train_dpr_cased.json'
+
+mapqa_dev_1127:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: '/home/zekun/mapqa/data/1127/test_dpr_cased.json'
+
+# mapqa_train_1114:
+#   _target_: dpr.data.biencoder_data.JsonQADataset
+#   file: '/home/zekun/mapqa/data/1114/train_dpr_cased.json'
+
+# mapqa_dev_1114:
+#   _target_: dpr.data.biencoder_data.JsonQADataset
+#   file: '/home/zekun/mapqa/data/1114/test_dpr_cased.json'
 
 nq_train:
   _target_: dpr.data.biencoder_data.JsonQADataset

@@ -173,6 +173,7 @@ class BiEncoder(nn.Module):
         encoder_type: str = None,
         representation_token_pos=0,
     ) -> Tuple[T, T]:
+
         q_encoder = self.question_model if encoder_type is None or encoder_type == "question" else self.ctx_model
         if self.use_spatial_position:
             _q_seq, q_pooled_out, _q_hidden = self.get_representation_with_spatial_position(
