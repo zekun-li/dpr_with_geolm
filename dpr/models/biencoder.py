@@ -372,6 +372,7 @@ class BiEncoder(nn.Module):
         for sample in samples:
             # ctx+ & [ctx-] composition
             # as of now, take the first(gold) ctx+ only
+            valid_geocoord = True # hack to handle empty geocoords for pivot
 
             if shuffle and shuffle_positives:
                 positive_ctxs = sample.positive_passages
@@ -386,21 +387,24 @@ class BiEncoder(nn.Module):
             question_t = tensorizer.text_to_tensor(question.text)
             question_tensors.append(question_t)
 
+            try:
+                pivot_lng = question.lng[0]
+                pivot_lat = question.lat[0]
+                pivot_lng, pivot_lat =  self.ptransformer.transform(pivot_lng, pivot_lat)  
+            except Exception as e: # lat lng unknown
+                valid_geocoord = False 
 
-            pivot_lng = question.lng[0]
-            pivot_lat = question.lat[0]
-            pivot_lng, pivot_lat =  self.ptransformer.transform(pivot_lng, pivot_lat)  
 
             question_lat = torch.tensor([0 for i in range(len(question_t))]).to(torch.float32)
             question_lng = torch.tensor([0 for i in range(len(question_t))]).to(torch.float32)
             
-
-            # if multiple geo-entities are mentioned in the same sentence, use the first geo-entity as pivot to normalize other geo-entities
-            if len(question.lat) != 1:
-                for other_lng, other_lat, start, end in zip(question.lng[1:], question.lat[1:], question.start_pos[1:], question.end_pos[1:]):
-                        other_lng , other_lat = self.ptransformer.transform(other_lng, other_lat)  
-                        question_lng[start:end] = (other_lng - pivot_lng)/self.distance_norm_factor
-                        question_lat[start:end] = (other_lat - pivot_lat)/self.distance_norm_factor
+            if valid_geocoord:
+                # if multiple geo-entities are mentioned in the same sentence, use the first geo-entity as pivot to normalize other geo-entities
+                if len(question.lat) != 1:
+                    for other_lng, other_lat, start, end in zip(question.lng[1:], question.lat[1:], question.start_pos[1:], question.end_pos[1:]):
+                            other_lng , other_lat = self.ptransformer.transform(other_lng, other_lat)  
+                            question_lng[start:end] = (other_lng - pivot_lng)/self.distance_norm_factor
+                            question_lat[start:end] = (other_lat - pivot_lat)/self.distance_norm_factor
 
             question_lats.append(question_lat)
             question_lngs.append(question_lng)
@@ -455,11 +459,17 @@ class BiEncoder(nn.Module):
                 other_lng , other_lat = self.ptransformer.transform(other_lng, other_lat)  
                 ctx_lat = torch.tensor([0 for i in range(len(sample_ctxs_tensors[0]))]).to(torch.float32) # equal to self.max_token_len
                 ctx_lng = torch.tensor([0 for i in range(len(sample_ctxs_tensors[0]))]).to(torch.float32)
-                ctx_lat[1:-1] = (other_lat - pivot_lat)/self.distance_norm_factor
-                ctx_lng[1:-1] = (other_lng - pivot_lng)/self.distance_norm_factor
+                if valid_geocoord:
+                    ctx_lat[1:-1] = (other_lat - pivot_lat)/self.distance_norm_factor
+                    ctx_lng[1:-1] = (other_lng - pivot_lng)/self.distance_norm_factor
                 ctx_lats.append(ctx_lat)
                 ctx_lngs.append(ctx_lng)
             
+
+        question_lngs = torch.cat([lng.view(1,-1) for lng in question_lngs], dim = 0)
+        question_lats = torch.cat([lat.view(1,-1) for lat in question_lats], dim = 0)
+        ctx_lngs = torch.cat([lng.view(1,-1) for lng in ctx_lngs], dim = 0)
+        ctx_lats = torch.cat([lat.view(1,-1) for lat in ctx_lats], dim = 0)
 
         ctxs_tensor = torch.cat([ctx.view(1, -1) for ctx in ctx_tensors], dim=0)
         questions_tensor = torch.cat([q.view(1, -1) for q in question_tensors], dim=0)
@@ -517,11 +527,16 @@ class BiEncoderNllLoss(object):
 
         softmax_scores = F.log_softmax(scores, dim=1)
 
-        loss = F.nll_loss(
-            softmax_scores,
-            torch.tensor(positive_idx_per_question).to(softmax_scores.device),
-            reduction="mean",
-        )
+        try:
+
+            loss = F.nll_loss(
+                softmax_scores,
+                torch.tensor(positive_idx_per_question).to(softmax_scores.device),
+                reduction="mean",
+            )
+        except Exception as e:
+            import pdb 
+            pdb.set_trace()
 
         max_score, max_idxs = torch.max(softmax_scores, 1)
         correct_predictions_count = (max_idxs == torch.tensor(positive_idx_per_question).to(max_idxs.device)).sum()

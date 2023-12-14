@@ -731,6 +731,7 @@ def _do_biencoder_fwd_pass(
     q_attn_mask = tensorizer.get_attn_mask(input.question_ids)
     ctx_attn_mask = tensorizer.get_attn_mask(input.context_ids)
 
+
     if model.training:
         model_out = model(
             question_ids = input.question_ids,
