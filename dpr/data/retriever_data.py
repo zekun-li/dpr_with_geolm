@@ -290,9 +290,9 @@ class MapQACsvCtxSrc(CsvCtxSrc):
     def __init__(
         self,
         file: str,
-        id_col: int = 1,
-        text_col: int = 2,
-        title_col: int = 5,
+        id_col: int = 0, #1
+        text_col: int = 1, #2
+        title_col: int = 4, #5
         id_prefix: str = None,
         normalize: bool = False,
     ):

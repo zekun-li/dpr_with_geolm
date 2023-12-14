@@ -250,7 +250,7 @@ class HFGeoLMEncoder(GeoLMModel):
         spatial_position_list_y = None,
         representation_token_pos=0,
     ) -> Tuple[T, ...]:
-
+        
         out = super().forward(
             input_ids=input_ids,
             token_type_ids=token_type_ids,

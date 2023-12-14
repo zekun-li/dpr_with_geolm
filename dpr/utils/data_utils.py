@@ -187,8 +187,7 @@ class Dataset(torch.utils.data.Dataset):
             query += self.query_special_suffix
 
         return query
-
-
+    
 # TODO: to be fully replaced with LocalSharded{...}. Keeping it only for old results reproduction compatibility
 class ShardedDataIterator(object):
     """

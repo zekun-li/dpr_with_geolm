@@ -25,7 +25,7 @@ from torch import Tensor as T
 from torch import nn
 
 from dpr.models import init_biencoder_components
-from dpr.models.biencoder import BiEncoderNllLoss, BiEncoderBatch
+from dpr.models.biencoder import BiEncoderNllLoss, BiEncoderBatch, GeoLMBiEncoderBatch
 from dpr.options import (
     setup_cfg_gpu,
     set_seed,
@@ -466,34 +466,66 @@ class BiEncoderTrainer(object):
             data_iteration = train_data_iterator.get_iteration()
             random.seed(seed + epoch + data_iteration)
 
-            biencoder_batch = biencoder.create_biencoder_input(
-                samples_batch,
-                self.tensorizer,
-                True,
-                num_hard_negatives,
-                num_other_negatives,
-                shuffle=True,
-                shuffle_positives=shuffle_positives,
-                query_token=special_token,
-            )
+            if 'geolm' in cfg.encoder.encoder_model_type:
+                biencoder_batch = biencoder.create_geolm_biencoder_input(
+                    samples_batch,
+                    self.tensorizer,
+                    True,
+                    num_hard_negatives,
+                    num_other_negatives,
+                    shuffle=True,
+                    shuffle_positives=shuffle_positives,
+                    query_token=special_token,
+                )
 
-            # get the token to be used for representation selection
-            from dpr.utils.data_utils import DEFAULT_SELECTOR
+                # get the token to be used for representation selection
+                from dpr.utils.data_utils import DEFAULT_SELECTOR
 
-            selector = ds_cfg.selector if ds_cfg else DEFAULT_SELECTOR
+                selector = ds_cfg.selector if ds_cfg else DEFAULT_SELECTOR
 
-            rep_positions = selector.get_positions(biencoder_batch.question_ids, self.tensorizer)
+                rep_positions = selector.get_positions(biencoder_batch.question_ids, self.tensorizer)
 
-            loss_scale = cfg.loss_scale_factors[dataset] if cfg.loss_scale_factors else None
-            loss, correct_cnt = _do_biencoder_fwd_pass(
-                self.biencoder,
-                biencoder_batch,
-                self.tensorizer,
-                cfg,
-                encoder_type=encoder_type,
-                rep_positions=rep_positions,
-                loss_scale=loss_scale,
-            )
+                loss_scale = cfg.loss_scale_factors[dataset] if cfg.loss_scale_factors else None
+                
+                loss, correct_cnt = _do_geolm_biencoder_fwd_pass(
+                    self.biencoder,
+                    biencoder_batch,
+                    self.tensorizer,
+                    cfg,
+                    encoder_type=encoder_type,
+                    rep_positions=rep_positions,
+                    loss_scale=loss_scale,
+                )
+            else:
+
+                biencoder_batch = biencoder.create_biencoder_input(
+                    samples_batch,
+                    self.tensorizer,
+                    True,
+                    num_hard_negatives,
+                    num_other_negatives,
+                    shuffle=True,
+                    shuffle_positives=shuffle_positives,
+                    query_token=special_token,
+                )
+
+                # get the token to be used for representation selection
+                from dpr.utils.data_utils import DEFAULT_SELECTOR
+
+                selector = ds_cfg.selector if ds_cfg else DEFAULT_SELECTOR
+
+                rep_positions = selector.get_positions(biencoder_batch.question_ids, self.tensorizer)
+
+                loss_scale = cfg.loss_scale_factors[dataset] if cfg.loss_scale_factors else None
+                loss, correct_cnt = _do_biencoder_fwd_pass(
+                    self.biencoder,
+                    biencoder_batch,
+                    self.tensorizer,
+                    cfg,
+                    encoder_type=encoder_type,
+                    rep_positions=rep_positions,
+                    loss_scale=loss_scale,
+                )
 
             epoch_correct_predictions += correct_cnt
             epoch_loss += loss.item()
@@ -722,6 +754,77 @@ def _do_biencoder_fwd_pass(
                 encoder_type=encoder_type,
                 representation_token_pos=rep_positions,
             )
+
+    local_q_vector, local_ctx_vectors = model_out
+
+    loss_function = BiEncoderNllLoss()
+
+    loss, is_correct = _calc_loss(
+        cfg,
+        loss_function,
+        local_q_vector,
+        local_ctx_vectors,
+        input.is_positive,
+        input.hard_negatives,
+        loss_scale=loss_scale,
+    )
+    is_correct = is_correct.sum().item()
+
+    if cfg.n_gpu > 1:
+        loss = loss.mean()
+    if cfg.train.gradient_accumulation_steps > 1:
+        loss = loss / cfg.train.gradient_accumulation_steps
+    return loss, is_correct
+
+
+def _do_geolm_biencoder_fwd_pass(
+    model: nn.Module,
+    input: GeoLMBiEncoderBatch,
+    tensorizer: Tensorizer,
+    cfg,
+    encoder_type: str,
+    rep_positions=0,
+    loss_scale: float = None,
+) -> Tuple[torch.Tensor, int]:
+
+    input = GeoLMBiEncoderBatch(**move_to_device(input._asdict(), cfg.device))
+
+    q_attn_mask = tensorizer.get_attn_mask(input.question_ids)
+    ctx_attn_mask = tensorizer.get_attn_mask(input.context_ids)
+
+
+    if model.training:
+        model_out = model(
+            question_ids = input.question_ids,
+            question_segments = input.question_segments,
+            question_attn_mask = q_attn_mask,
+            question_spatial_position_list_x = input.question_spatial_position_list_x,
+            question_spatial_position_list_y = input.question_spatial_position_list_y,
+            context_ids = input.context_ids,
+            ctx_segments = input.ctx_segments,
+            ctx_attn_mask = ctx_attn_mask,
+            ctx_spatial_position_list_x = input.ctx_spatial_position_list_x,
+            ctx_spatial_position_list_y = input.ctx_spatial_position_list_y,
+            encoder_type=encoder_type,
+            representation_token_pos=rep_positions,
+        )
+    else:
+        with torch.no_grad():
+            model_out = model(
+                input.question_ids,
+                input.question_segments,
+                q_attn_mask,
+                input.question_spatial_position_list_x,
+                input.question_spatial_position_list_y,
+                input.context_ids,
+                input.ctx_segments,
+                ctx_attn_mask,
+                input.ctx_spatial_position_list_x,
+                input.ctx_spatial_position_list_y,
+                encoder_type=encoder_type,
+                representation_token_pos=rep_positions,
+            )
+
 
     local_q_vector, local_ctx_vectors = model_out
 
