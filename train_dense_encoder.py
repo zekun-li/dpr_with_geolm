@@ -247,28 +247,54 @@ class BiEncoderTrainer(object):
                 samples_batch, dataset = samples_batch
             logger.info("Eval step: %d ,rnk=%s", i, cfg.local_rank)
 
-            biencoder_input = biencoder.create_biencoder_input(
-                samples_batch,
-                self.tensorizer,
-                True,
-                num_hard_negatives,
-                num_other_negatives,
-                shuffle=False,
-            )
+            if 'geolm' in cfg.encoder.encoder_model_type:
+                biencoder_input = biencoder.create_geolm_biencoder_input(
+                    samples_batch,
+                    self.tensorizer,
+                    True,
+                    num_hard_negatives,
+                    num_other_negatives,
+                    shuffle=False,
+                )
+            else:
+                biencoder_input = biencoder.create_biencoder_input(
+                    samples_batch,
+                    self.tensorizer,
+                    True,
+                    num_hard_negatives,
+                    num_other_negatives,
+                    shuffle=False,
+                )
+
 
             # get the token to be used for representation selection
             ds_cfg = self.ds_cfg.dev_datasets[dataset]
             rep_positions = ds_cfg.selector.get_positions(biencoder_input.question_ids, self.tensorizer)
             encoder_type = ds_cfg.encoder_type
 
-            loss, correct_cnt = _do_biencoder_fwd_pass(
-                self.biencoder,
-                biencoder_input,
-                self.tensorizer,
-                cfg,
-                encoder_type=encoder_type,
-                rep_positions=rep_positions,
-            )
+            
+
+            if 'geolm' in cfg.encoder.encoder_model_type:
+                loss, correct_cnt = _do_geolm_biencoder_fwd_pass(
+                    self.biencoder,
+                    biencoder_input,
+                    self.tensorizer,
+                    cfg,
+                    encoder_type=encoder_type,
+                    rep_positions=rep_positions,
+                )
+            else:
+                loss, correct_cnt = _do_biencoder_fwd_pass(
+                    self.biencoder,
+                    biencoder_input,
+                    self.tensorizer,
+                    cfg,
+                    encoder_type=encoder_type,
+                    rep_positions=rep_positions,
+                )
+
+
+
             total_loss += loss.item()
             total_correct_predictions += correct_cnt
             batches += 1
@@ -812,16 +838,16 @@ def _do_geolm_biencoder_fwd_pass(
     else:
         with torch.no_grad():
             model_out = model(
-                input.question_ids,
-                input.question_segments,
-                q_attn_mask,
-                input.question_spatial_position_list_x,
-                input.question_spatial_position_list_y,
-                input.context_ids,
-                input.ctx_segments,
-                ctx_attn_mask,
-                input.ctx_spatial_position_list_x,
-                input.ctx_spatial_position_list_y,
+                question_ids = input.question_ids,
+                question_segments = input.question_segments,
+                question_attn_mask = q_attn_mask,
+                question_spatial_position_list_x =input.question_spatial_position_list_x,
+                question_spatial_position_list_y =input.question_spatial_position_list_y,
+                context_ids = input.context_ids,
+                ctx_segments =input.ctx_segments,
+                ctx_attn_mask =ctx_attn_mask,
+                ctx_spatial_position_list_x =input.ctx_spatial_position_list_x,
+                ctx_spatial_position_list_y =input.ctx_spatial_position_list_y,
                 encoder_type=encoder_type,
                 representation_token_pos=rep_positions,
             )

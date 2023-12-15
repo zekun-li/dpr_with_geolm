@@ -392,6 +392,8 @@ class BiEncoder(nn.Module):
                 pivot_lat = question.lat[0]
                 pivot_lng, pivot_lat =  self.ptransformer.transform(pivot_lng, pivot_lat)  
             except Exception as e: # lat lng unknown
+                import pdb 
+                pdb.set_trace()
                 valid_geocoord = False 
 
 
