@@ -1,5 +1,13 @@
 # @package _group_
 
+mapqa_train_1215:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file: '/home/zekun/mapqa/data/1215/train_dpr_cased_train.json'
+
+mapqa_dev_1215:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file: '/home/zekun/mapqa/data/1215/train_dpr_cased_val.json'
+
 mapqa_train_1127_Dec13:
   _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
   file: '/home/zekun/mapqa/data/1127/train_dpr_cased.json'
