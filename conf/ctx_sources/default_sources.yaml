@@ -5,14 +5,44 @@ dpr_wiki:
   file: data.wikipedia_split.psgs_w100
   id_prefix: 'wiki:'
 
-mapqa_ctx:
-  _target_: dpr.data.retriever_data.CsvCtxSrc
-  file: '/home/zekun/mapqa/DPR/downloads/data/mapqa/mapqa_ctx.tsv'
-
-mapqa_ctx_mal:
+mapqa_socal_entity_ctx:
   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
-  file: '/home/zekun/mapqa/data/entities.tsv'
+  file: '/home/zekun/mapqa/data/socal_0810/entities.tsv'
 
-mapqa_ctx_mal_1127:
+mapqa_il_entity_ctx:
   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
-  file: '/home/zekun/mapqa/data/1127/entities_new.tsv'
+  file: '/home/zekun/mapqa/data/il_0810/entities.tsv'
+
+
+# mapqa_socal_entity_ctx:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/socal_0607/entities.tsv'
+
+# mapqa_il_entity_ctx:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/il_0607/entities.tsv'
+
+# mapqa_socal_amenity_ctx:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/socal_0607/entities.tsv'
+
+# mapqa_il_amenity_ctx:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/il_0607/entities.tsv'
+
+
+# mapqa_ctx:
+#   _target_: dpr.data.retriever_data.CsvCtxSrc
+#   file: '/home/zekun/mapqa/DPR/downloads/data/mapqa/mapqa_ctx.tsv'
+
+# mapqa_ctx_mal:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/entities.tsv'
+
+# mapqa_ctx_mal_1127:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/1127/entities_new.tsv'
+
+# mapqa_ctx_mal_illinois:
+#   _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+#   file: '/home/zekun/mapqa/data/illinois/entities.tsv'

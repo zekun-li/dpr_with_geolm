@@ -1,5 +1,163 @@
 # @package _group_
 
+
+
+mapqa_0915_socal_0:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_adjacent.csv'
+
+mapqa_0915_socal_1:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_amenities_around_specific.csv'
+
+mapqa_0915_socal_2:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_amenities_around.csv'
+
+mapqa_0915_socal_3:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_amenities.csv'
+
+mapqa_0915_socal_4:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_compare_closer.csv'
+
+mapqa_0915_socal_5:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_direction_nearest.csv'
+
+mapqa_0915_socal_6:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/socal_0915/test/test_socal_dpr_cased_nearest_amenity.csv'
+
+mapqa_0915_il_0:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_adjacent.csv'
+
+mapqa_0915_il_1:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_amenities_around_specific.csv'
+
+mapqa_0915_il_2:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_amenities_around.csv'
+
+mapqa_0915_il_3:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_amenities.csv'
+
+mapqa_0915_il_4:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_compare_closer.csv'
+
+mapqa_0915_il_5:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_direction_nearest.csv'
+
+mapqa_0915_il_6:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/il_0915/test/test_il_dpr_cased_nearest_amenity.csv'
+
+
+# mapqa_0609_socal_0:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv'
+
+# mapqa_0609_socal_1:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv'
+
+# mapqa_0609_socal_2:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv'
+
+# mapqa_0609_socal_3:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv'
+
+# mapqa_0609_socal_4:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv'
+
+# mapqa_0609_socal_5:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv'
+
+# mapqa_0609_socal_6:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv'
+
+# mapqa_0609_il_0:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv'
+
+# mapqa_0609_il_1:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv'
+
+# mapqa_0609_il_2:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv'
+
+# mapqa_0609_il_3:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv'
+
+# mapqa_0609_il_4:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv'
+
+# mapqa_0609_il_5:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv'
+
+# mapqa_0609_il_6:
+#   _target_: dpr.data.retriever_data.CsvQASrc
+#   file: '/home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv'
+
+# ------------
+mapqa_illinois_test:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/illinois/test_dpr_cased.csv'
+
+
+mapqa_test_all:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased.csv'
+
+mapqa_test_0:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_0.csv'
+
+mapqa_test_1:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_1.csv'
+
+mapqa_test_2:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_2.csv'
+
+mapqa_test_3:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_3.csv'
+
+mapqa_test_4:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_4.csv'
+
+mapqa_test_5:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_5.csv'
+
+mapqa_test_6:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_6.csv'
+
+mapqa_test_7:
+  _target_: dpr.data.retriever_data.CsvQASrc
+  file: '/home/zekun/mapqa/data/1215/test_dpr_cased_7.csv'
+
+
 mapqa_test:
   _target_: dpr.data.retriever_data.CsvQASrc
   file: '/home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv'

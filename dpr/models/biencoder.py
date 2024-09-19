@@ -404,6 +404,8 @@ class BiEncoder(nn.Module):
                 # if multiple geo-entities are mentioned in the same sentence, use the first geo-entity as pivot to normalize other geo-entities
                 if len(question.lat) != 1:
                     for other_lng, other_lat, start, end in zip(question.lng[1:], question.lat[1:], question.start_pos[1:], question.end_pos[1:]):
+                            start = start + 1 
+                            end = end + 1
                             other_lng , other_lat = self.ptransformer.transform(other_lng, other_lat)  
                             question_lng[start:end] = (other_lng - pivot_lng)/self.distance_norm_factor
                             question_lat[start:end] = (other_lat - pivot_lat)/self.distance_norm_factor

@@ -180,8 +180,8 @@ class LocalFaissRetriever(DenseRetriever):
         :return:
         """
         time0 = time.time()
-        import pdb
-        pdb.set_trace()
+        # import pdb
+        # pdb.set_trace()
         results = self.index.search_knn(query_vectors, top_docs)
         logger.info("index search time: %f sec.", time.time() - time0)
         self.index = None

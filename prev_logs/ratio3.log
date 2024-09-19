@@ -1,0 +1,1554 @@
+[2024-06-15 19:30:53,602][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:30:53,602][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:30:53,603][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:30:53,603][root][INFO] - 16-bits training: False 
+[2024-06-15 19:30:53,603][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:30:54,550][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:30:54,550][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:30:54,561][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_0
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:30:55,514][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:30:56,402][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:30:57,338][root][INFO] - Loading saved model state ...
+[2024-06-15 19:30:57,373][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:30:57,599][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:30:57,599][root][INFO] - qa_dataset: mapqa_0609_socal_0
+[2024-06-15 19:30:57,601][root][INFO] - questions len 51
+[2024-06-15 19:30:57,601][root][INFO] - questions_text len 0
+[2024-06-15 19:30:57,601][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:30:57,601][root][INFO] - Using special token None
+[2024-06-15 19:30:59,634][root][INFO] - Total encoded queries tensor torch.Size([51, 768])
+[2024-06-15 19:30:59,635][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:30:59,635][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:30:59,635][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:30:59,635][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:30:59,635][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:30:59,635][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:31:01,563][root][INFO] - data indexed 50000
+[2024-06-15 19:31:01,563][root][INFO] - Total data indexed 50000
+[2024-06-15 19:31:01,889][root][INFO] - data indexed 100000
+[2024-06-15 19:31:01,889][root][INFO] - Total data indexed 100000
+[2024-06-15 19:31:02,156][root][INFO] - data indexed 150000
+[2024-06-15 19:31:02,156][root][INFO] - Total data indexed 150000
+[2024-06-15 19:31:02,430][root][INFO] - data indexed 200000
+[2024-06-15 19:31:02,430][root][INFO] - Total data indexed 200000
+[2024-06-15 19:31:02,804][root][INFO] - data indexed 250000
+[2024-06-15 19:31:02,804][root][INFO] - Total data indexed 250000
+[2024-06-15 19:31:03,079][root][INFO] - data indexed 300000
+[2024-06-15 19:31:03,079][root][INFO] - Total data indexed 300000
+[2024-06-15 19:31:03,239][root][INFO] - data indexed 350000
+[2024-06-15 19:31:03,239][root][INFO] - Total data indexed 350000
+[2024-06-15 19:31:03,515][root][INFO] - data indexed 400000
+[2024-06-15 19:31:03,515][root][INFO] - Total data indexed 400000
+[2024-06-15 19:31:04,102][root][INFO] - data indexed 450000
+[2024-06-15 19:31:04,102][root][INFO] - Total data indexed 450000
+[2024-06-15 19:31:04,379][root][INFO] - data indexed 500000
+[2024-06-15 19:31:04,380][root][INFO] - Total data indexed 500000
+[2024-06-15 19:31:04,664][root][INFO] - data indexed 550000
+[2024-06-15 19:31:04,665][root][INFO] - Total data indexed 550000
+[2024-06-15 19:31:04,823][root][INFO] - data indexed 600000
+[2024-06-15 19:31:04,824][root][INFO] - Total data indexed 600000
+[2024-06-15 19:31:04,942][root][INFO] - data indexed 606770
+[2024-06-15 19:31:04,942][root][INFO] - Total data indexed 606770
+[2024-06-15 19:31:04,942][root][INFO] - Data indexing completed.
+[2024-06-15 19:31:05,876][root][INFO] - index search time: 0.932646 sec.
+[2024-06-15 19:31:05,877][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:31:07,600][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:31:07,601][root][INFO] - validating passages. size=606770
+[2024-06-15 19:31:07,601][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:31:07,601][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:31:08,814][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:31:08,835][dpr.data.qa_validation][INFO] - Per question validation results len=51
+[2024-06-15 19:31:09,015][root][INFO] - Validation results: top k documents hits [1, 2, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11]
+[2024-06-15 19:31:09,016][root][INFO] - Validation results: top k documents hits accuracy [0.0196078431372549, 0.0392156862745098, 0.0392156862745098, 0.058823529411764705, 0.058823529411764705, 0.058823529411764705, 0.0784313725490196, 0.09803921568627451, 0.09803921568627451, 0.09803921568627451, 0.09803921568627451, 0.09803921568627451, 0.09803921568627451, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.11764705882352941, 0.13725490196078433, 0.13725490196078433, 0.13725490196078433, 0.13725490196078433, 0.13725490196078433, 0.13725490196078433, 0.13725490196078433, 0.13725490196078433, 0.1568627450980392, 0.1568627450980392, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393, 0.21568627450980393]
+[2024-06-15 19:31:09,056][root][INFO] - Saved results * scores  to output.json
+[2024-06-15 19:31:13,745][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:31:13,745][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:31:13,746][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:31:13,746][root][INFO] - 16-bits training: False 
+[2024-06-15 19:31:13,746][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:31:14,634][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:31:14,635][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:31:14,646][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_1
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:31:15,597][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:31:16,479][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:31:17,348][root][INFO] - Loading saved model state ...
+[2024-06-15 19:31:17,389][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:31:17,631][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:31:17,631][root][INFO] - qa_dataset: mapqa_0609_socal_1
+[2024-06-15 19:31:17,633][root][INFO] - questions len 50
+[2024-06-15 19:31:17,633][root][INFO] - questions_text len 0
+[2024-06-15 19:31:17,633][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:31:17,633][root][INFO] - Using special token None
+[2024-06-15 19:31:19,686][root][INFO] - Total encoded queries tensor torch.Size([50, 768])
+[2024-06-15 19:31:19,687][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:31:19,687][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:31:19,687][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:31:19,687][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:31:19,688][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:31:19,688][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:31:21,615][root][INFO] - data indexed 50000
+[2024-06-15 19:31:21,615][root][INFO] - Total data indexed 50000
+[2024-06-15 19:31:21,941][root][INFO] - data indexed 100000
+[2024-06-15 19:31:21,941][root][INFO] - Total data indexed 100000
+[2024-06-15 19:31:22,211][root][INFO] - data indexed 150000
+[2024-06-15 19:31:22,211][root][INFO] - Total data indexed 150000
+[2024-06-15 19:31:22,485][root][INFO] - data indexed 200000
+[2024-06-15 19:31:22,485][root][INFO] - Total data indexed 200000
+[2024-06-15 19:31:22,861][root][INFO] - data indexed 250000
+[2024-06-15 19:31:22,861][root][INFO] - Total data indexed 250000
+[2024-06-15 19:31:23,138][root][INFO] - data indexed 300000
+[2024-06-15 19:31:23,139][root][INFO] - Total data indexed 300000
+[2024-06-15 19:31:23,299][root][INFO] - data indexed 350000
+[2024-06-15 19:31:23,300][root][INFO] - Total data indexed 350000
+[2024-06-15 19:31:23,577][root][INFO] - data indexed 400000
+[2024-06-15 19:31:23,577][root][INFO] - Total data indexed 400000
+[2024-06-15 19:31:24,165][root][INFO] - data indexed 450000
+[2024-06-15 19:31:24,165][root][INFO] - Total data indexed 450000
+[2024-06-15 19:31:24,443][root][INFO] - data indexed 500000
+[2024-06-15 19:31:24,444][root][INFO] - Total data indexed 500000
+[2024-06-15 19:31:24,728][root][INFO] - data indexed 550000
+[2024-06-15 19:31:24,729][root][INFO] - Total data indexed 550000
+[2024-06-15 19:31:24,890][root][INFO] - data indexed 600000
+[2024-06-15 19:31:24,890][root][INFO] - Total data indexed 600000
+[2024-06-15 19:31:25,010][root][INFO] - data indexed 606770
+[2024-06-15 19:31:25,010][root][INFO] - Total data indexed 606770
+[2024-06-15 19:31:25,011][root][INFO] - Data indexing completed.
+[2024-06-15 19:31:25,912][root][INFO] - index search time: 0.899486 sec.
+[2024-06-15 19:31:25,912][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:31:27,640][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:31:27,641][root][INFO] - validating passages. size=606770
+[2024-06-15 19:31:27,641][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:31:27,641][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:31:28,849][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:31:28,866][dpr.data.qa_validation][INFO] - Per question validation results len=50
+[2024-06-15 19:31:29,042][root][INFO] - Validation results: top k documents hits [3, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7]
+[2024-06-15 19:31:29,042][root][INFO] - Validation results: top k documents hits accuracy [0.06, 0.08, 0.1, 0.1, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]
+[2024-06-15 19:31:29,079][root][INFO] - Saved results * scores  to output.json
+[2024-06-15 19:31:33,839][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:31:33,839][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:31:33,840][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:31:33,840][root][INFO] - 16-bits training: False 
+[2024-06-15 19:31:33,840][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:31:34,723][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:31:34,724][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:31:34,734][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_2
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:31:35,687][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:31:36,563][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:31:37,432][root][INFO] - Loading saved model state ...
+[2024-06-15 19:31:37,472][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:31:37,707][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:31:37,707][root][INFO] - qa_dataset: mapqa_0609_socal_2
+[2024-06-15 19:31:37,709][root][INFO] - questions len 51
+[2024-06-15 19:31:37,709][root][INFO] - questions_text len 0
+[2024-06-15 19:31:37,709][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:31:37,709][root][INFO] - Using special token None
+[2024-06-15 19:31:39,713][root][INFO] - Total encoded queries tensor torch.Size([51, 768])
+[2024-06-15 19:31:39,714][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:31:39,714][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:31:39,714][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:31:39,715][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:31:39,715][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:31:39,715][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:31:41,621][root][INFO] - data indexed 50000
+[2024-06-15 19:31:41,621][root][INFO] - Total data indexed 50000
+[2024-06-15 19:31:41,947][root][INFO] - data indexed 100000
+[2024-06-15 19:31:41,947][root][INFO] - Total data indexed 100000
+[2024-06-15 19:31:42,214][root][INFO] - data indexed 150000
+[2024-06-15 19:31:42,214][root][INFO] - Total data indexed 150000
+[2024-06-15 19:31:42,488][root][INFO] - data indexed 200000
+[2024-06-15 19:31:42,488][root][INFO] - Total data indexed 200000
+[2024-06-15 19:31:42,858][root][INFO] - data indexed 250000
+[2024-06-15 19:31:42,858][root][INFO] - Total data indexed 250000
+[2024-06-15 19:31:43,134][root][INFO] - data indexed 300000
+[2024-06-15 19:31:43,135][root][INFO] - Total data indexed 300000
+[2024-06-15 19:31:43,294][root][INFO] - data indexed 350000
+[2024-06-15 19:31:43,295][root][INFO] - Total data indexed 350000
+[2024-06-15 19:31:43,573][root][INFO] - data indexed 400000
+[2024-06-15 19:31:43,574][root][INFO] - Total data indexed 400000
+[2024-06-15 19:31:44,161][root][INFO] - data indexed 450000
+[2024-06-15 19:31:44,161][root][INFO] - Total data indexed 450000
+[2024-06-15 19:31:44,439][root][INFO] - data indexed 500000
+[2024-06-15 19:31:44,439][root][INFO] - Total data indexed 500000
+[2024-06-15 19:31:44,725][root][INFO] - data indexed 550000
+[2024-06-15 19:31:44,725][root][INFO] - Total data indexed 550000
+[2024-06-15 19:31:44,883][root][INFO] - data indexed 600000
+[2024-06-15 19:31:44,884][root][INFO] - Total data indexed 600000
+[2024-06-15 19:31:45,004][root][INFO] - data indexed 606770
+[2024-06-15 19:31:45,005][root][INFO] - Total data indexed 606770
+[2024-06-15 19:31:45,005][root][INFO] - Data indexing completed.
+[2024-06-15 19:31:46,079][root][INFO] - index search time: 1.073177 sec.
+[2024-06-15 19:31:46,080][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:31:47,805][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:31:47,805][root][INFO] - validating passages. size=606770
+[2024-06-15 19:31:47,805][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:31:47,805][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:31:49,030][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:31:49,052][dpr.data.qa_validation][INFO] - Per question validation results len=51
+[2024-06-15 19:31:49,219][root][INFO] - Validation results: top k documents hits [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+[2024-06-15 19:31:49,219][root][INFO] - Validation results: top k documents hits accuracy [0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549, 0.0196078431372549]
+[2024-06-15 19:31:49,257][root][INFO] - Saved results * scores  to output.json
+[2024-06-15 19:31:54,049][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:31:54,050][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:31:54,050][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:31:54,050][root][INFO] - 16-bits training: False 
+[2024-06-15 19:31:54,050][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:31:54,936][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:31:54,937][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:31:54,948][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_3
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:31:55,900][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:31:56,815][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:31:57,677][root][INFO] - Loading saved model state ...
+[2024-06-15 19:31:57,717][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:31:57,958][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:31:57,958][root][INFO] - qa_dataset: mapqa_0609_socal_3
+[2024-06-15 19:31:57,959][root][INFO] - questions len 29
+[2024-06-15 19:31:57,959][root][INFO] - questions_text len 0
+[2024-06-15 19:31:57,960][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:31:57,960][root][INFO] - Using special token None
+[2024-06-15 19:31:59,799][root][INFO] - Total encoded queries tensor torch.Size([29, 768])
+[2024-06-15 19:31:59,800][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:31:59,800][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:31:59,800][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:31:59,800][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:31:59,801][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:31:59,801][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:32:01,684][root][INFO] - data indexed 50000
+[2024-06-15 19:32:01,684][root][INFO] - Total data indexed 50000
+[2024-06-15 19:32:02,005][root][INFO] - data indexed 100000
+[2024-06-15 19:32:02,005][root][INFO] - Total data indexed 100000
+[2024-06-15 19:32:02,271][root][INFO] - data indexed 150000
+[2024-06-15 19:32:02,271][root][INFO] - Total data indexed 150000
+[2024-06-15 19:32:02,543][root][INFO] - data indexed 200000
+[2024-06-15 19:32:02,543][root][INFO] - Total data indexed 200000
+[2024-06-15 19:32:03,036][root][INFO] - data indexed 250000
+[2024-06-15 19:32:03,036][root][INFO] - Total data indexed 250000
+[2024-06-15 19:32:03,194][root][INFO] - data indexed 300000
+[2024-06-15 19:32:03,194][root][INFO] - Total data indexed 300000
+[2024-06-15 19:32:03,353][root][INFO] - data indexed 350000
+[2024-06-15 19:32:03,353][root][INFO] - Total data indexed 350000
+[2024-06-15 19:32:03,627][root][INFO] - data indexed 400000
+[2024-06-15 19:32:03,628][root][INFO] - Total data indexed 400000
+[2024-06-15 19:32:04,212][root][INFO] - data indexed 450000
+[2024-06-15 19:32:04,212][root][INFO] - Total data indexed 450000
+[2024-06-15 19:32:04,490][root][INFO] - data indexed 500000
+[2024-06-15 19:32:04,491][root][INFO] - Total data indexed 500000
+[2024-06-15 19:32:04,652][root][INFO] - data indexed 550000
+[2024-06-15 19:32:04,652][root][INFO] - Total data indexed 550000
+[2024-06-15 19:32:04,930][root][INFO] - data indexed 600000
+[2024-06-15 19:32:04,931][root][INFO] - Total data indexed 600000
+[2024-06-15 19:32:05,050][root][INFO] - data indexed 606770
+[2024-06-15 19:32:05,050][root][INFO] - Total data indexed 606770
+[2024-06-15 19:32:05,050][root][INFO] - Data indexing completed.
+[2024-06-15 19:32:05,748][root][INFO] - index search time: 0.696680 sec.
+[2024-06-15 19:32:05,749][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:32:07,843][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:32:07,843][root][INFO] - validating passages. size=606770
+[2024-06-15 19:32:07,843][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:32:07,843][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:32:09,051][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:32:09,069][dpr.data.qa_validation][INFO] - Per question validation results len=29
+[2024-06-15 19:32:09,251][root][INFO] - Validation results: top k documents hits [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+[2024-06-15 19:32:09,251][root][INFO] - Validation results: top k documents hits accuracy [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.034482758620689655, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.06896551724137931, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896, 0.10344827586206896]
+[2024-06-15 19:32:09,275][root][INFO] - Saved results * scores  to output.json
+[2024-06-15 19:32:14,043][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:32:14,043][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:32:14,044][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:32:14,044][root][INFO] - 16-bits training: False 
+[2024-06-15 19:32:14,044][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:32:14,927][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:32:14,928][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:32:14,938][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_4
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:32:15,891][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:32:16,763][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:32:17,629][root][INFO] - Loading saved model state ...
+[2024-06-15 19:32:17,668][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:32:17,901][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:32:17,901][root][INFO] - qa_dataset: mapqa_0609_socal_4
+[2024-06-15 19:32:17,902][root][INFO] - questions len 19
+[2024-06-15 19:32:17,902][root][INFO] - questions_text len 0
+[2024-06-15 19:32:17,902][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:32:17,902][root][INFO] - Using special token None
+[2024-06-15 19:32:19,788][root][INFO] - Total encoded queries tensor torch.Size([19, 768])
+[2024-06-15 19:32:19,789][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:32:19,789][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:32:19,789][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:32:19,790][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:32:19,790][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:32:19,790][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:32:21,657][root][INFO] - data indexed 50000
+[2024-06-15 19:32:21,657][root][INFO] - Total data indexed 50000
+[2024-06-15 19:32:21,976][root][INFO] - data indexed 100000
+[2024-06-15 19:32:21,976][root][INFO] - Total data indexed 100000
+[2024-06-15 19:32:22,244][root][INFO] - data indexed 150000
+[2024-06-15 19:32:22,244][root][INFO] - Total data indexed 150000
+[2024-06-15 19:32:22,512][root][INFO] - data indexed 200000
+[2024-06-15 19:32:22,513][root][INFO] - Total data indexed 200000
+[2024-06-15 19:32:23,002][root][INFO] - data indexed 250000
+[2024-06-15 19:32:23,002][root][INFO] - Total data indexed 250000
+[2024-06-15 19:32:23,160][root][INFO] - data indexed 300000
+[2024-06-15 19:32:23,161][root][INFO] - Total data indexed 300000
+[2024-06-15 19:32:23,318][root][INFO] - data indexed 350000
+[2024-06-15 19:32:23,319][root][INFO] - Total data indexed 350000
+[2024-06-15 19:32:23,591][root][INFO] - data indexed 400000
+[2024-06-15 19:32:23,591][root][INFO] - Total data indexed 400000
+[2024-06-15 19:32:24,175][root][INFO] - data indexed 450000
+[2024-06-15 19:32:24,176][root][INFO] - Total data indexed 450000
+[2024-06-15 19:32:24,449][root][INFO] - data indexed 500000
+[2024-06-15 19:32:24,450][root][INFO] - Total data indexed 500000
+[2024-06-15 19:32:24,610][root][INFO] - data indexed 550000
+[2024-06-15 19:32:24,610][root][INFO] - Total data indexed 550000
+[2024-06-15 19:32:24,885][root][INFO] - data indexed 600000
+[2024-06-15 19:32:24,885][root][INFO] - Total data indexed 600000
+[2024-06-15 19:32:25,006][root][INFO] - data indexed 606770
+[2024-06-15 19:32:25,007][root][INFO] - Total data indexed 606770
+[2024-06-15 19:32:25,007][root][INFO] - Data indexing completed.
+[2024-06-15 19:32:25,263][root][INFO] - index search time: 0.254379 sec.
+[2024-06-15 19:32:25,263][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:32:27,250][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:32:27,251][root][INFO] - validating passages. size=606770
+[2024-06-15 19:32:27,251][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:32:27,251][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:32:28,469][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:32:28,479][dpr.data.qa_validation][INFO] - Per question validation results len=19
+[2024-06-15 19:32:28,650][root][INFO] - Validation results: top k documents hits [1, 1, 1, 1, 2, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]
+[2024-06-15 19:32:28,650][root][INFO] - Validation results: top k documents hits accuracy [0.05263157894736842, 0.05263157894736842, 0.05263157894736842, 0.05263157894736842, 0.10526315789473684, 0.10526315789473684, 0.15789473684210525, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.21052631578947367, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.2631578947368421, 0.3157894736842105, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.3684210526315789, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.42105263157894735, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576, 0.47368421052631576]
+[2024-06-15 19:32:28,666][root][INFO] - Saved results * scores  to output.json
+[2024-06-15 19:32:33,416][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:32:33,416][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:32:33,417][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:32:33,417][root][INFO] - 16-bits training: False 
+[2024-06-15 19:32:33,417][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:32:34,303][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:32:34,303][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:32:34,314][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_5
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:32:35,264][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:32:36,130][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:32:36,999][root][INFO] - Loading saved model state ...
+[2024-06-15 19:32:37,036][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:32:37,295][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:32:37,296][root][INFO] - qa_dataset: mapqa_0609_socal_5
+[2024-06-15 19:32:37,297][root][INFO] - questions len 51
+[2024-06-15 19:32:37,297][root][INFO] - questions_text len 0
+[2024-06-15 19:32:37,297][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:32:37,297][root][INFO] - Using special token None
+[2024-06-15 19:32:39,389][root][INFO] - Total encoded queries tensor torch.Size([51, 768])
+[2024-06-15 19:32:39,390][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:32:39,390][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:32:39,390][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:32:39,390][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:32:39,390][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:32:39,390][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:32:41,288][root][INFO] - data indexed 50000
+[2024-06-15 19:32:41,289][root][INFO] - Total data indexed 50000
+[2024-06-15 19:32:41,631][root][INFO] - data indexed 100000
+[2024-06-15 19:32:41,631][root][INFO] - Total data indexed 100000
+[2024-06-15 19:32:41,899][root][INFO] - data indexed 150000
+[2024-06-15 19:32:41,899][root][INFO] - Total data indexed 150000
+[2024-06-15 19:32:42,173][root][INFO] - data indexed 200000
+[2024-06-15 19:32:42,173][root][INFO] - Total data indexed 200000
+[2024-06-15 19:32:42,572][root][INFO] - data indexed 250000
+[2024-06-15 19:32:42,572][root][INFO] - Total data indexed 250000
+[2024-06-15 19:32:42,861][root][INFO] - data indexed 300000
+[2024-06-15 19:32:42,861][root][INFO] - Total data indexed 300000
+[2024-06-15 19:32:43,029][root][INFO] - data indexed 350000
+[2024-06-15 19:32:43,030][root][INFO] - Total data indexed 350000
+[2024-06-15 19:32:43,316][root][INFO] - data indexed 400000
+[2024-06-15 19:32:43,317][root][INFO] - Total data indexed 400000
+[2024-06-15 19:32:43,941][root][INFO] - data indexed 450000
+[2024-06-15 19:32:43,941][root][INFO] - Total data indexed 450000
+[2024-06-15 19:32:44,227][root][INFO] - data indexed 500000
+[2024-06-15 19:32:44,228][root][INFO] - Total data indexed 500000
+[2024-06-15 19:32:44,523][root][INFO] - data indexed 550000
+[2024-06-15 19:32:44,523][root][INFO] - Total data indexed 550000
+[2024-06-15 19:32:44,692][root][INFO] - data indexed 600000
+[2024-06-15 19:32:44,692][root][INFO] - Total data indexed 600000
+[2024-06-15 19:32:44,812][root][INFO] - data indexed 606770
+[2024-06-15 19:32:44,812][root][INFO] - Total data indexed 606770
+[2024-06-15 19:32:44,812][root][INFO] - Data indexing completed.
+[2024-06-15 19:32:45,757][root][INFO] - index search time: 0.943812 sec.
+[2024-06-15 19:32:45,758][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:32:47,498][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:32:47,498][root][INFO] - validating passages. size=606770
+[2024-06-15 19:32:47,498][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:32:47,498][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:32:48,727][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:32:48,751][dpr.data.qa_validation][INFO] - Per question validation results len=51
+[2024-06-15 19:32:48,922][root][INFO] - Validation results: top k documents hits [5, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 12, 12, 12, 12, 12, 12, 12, 12, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+[2024-06-15 19:32:48,922][root][INFO] - Validation results: top k documents hits accuracy [0.09803921568627451, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.17647058823529413, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.19607843137254902, 0.23529411764705882, 0.23529411764705882, 0.23529411764705882, 0.23529411764705882, 0.23529411764705882, 0.23529411764705882, 0.23529411764705882, 0.23529411764705882, 0.27450980392156865, 0.27450980392156865, 0.27450980392156865, 0.27450980392156865, 0.29411764705882354, 0.29411764705882354, 0.29411764705882354, 0.29411764705882354, 0.29411764705882354, 0.29411764705882354, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3137254901960784, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.37254901960784315, 0.37254901960784315, 0.37254901960784315, 0.37254901960784315, 0.37254901960784315, 0.37254901960784315, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803, 0.39215686274509803]
+[2024-06-15 19:32:48,964][root][INFO] - Saved results * scores  to output.json
+[2024-06-15 19:32:53,696][root][INFO] - CFG's local_rank=-1
+[2024-06-15 19:32:53,696][root][INFO] - Env WORLD_SIZE=None
+[2024-06-15 19:32:53,697][root][INFO] - Initialized host ip-172-31-69-60.ec2.internal as d.rank -1 on device=cuda, n_gpu=4, world size=1
+[2024-06-15 19:32:53,697][root][INFO] - 16-bits training: False 
+[2024-06-15 19:32:53,697][root][INFO] - Reading saved model from /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+[2024-06-15 19:32:54,584][root][INFO] - model_state_dict keys dict_keys(['model_dict', 'optimizer_dict', 'scheduler_dict', 'offset', 'epoch', 'encoder_params'])
+[2024-06-15 19:32:54,585][root][INFO] - CFG (after gpu  configuration):
+[2024-06-15 19:32:54,596][root][INFO] - encoder:
+  encoder_model_type: hf_geolm
+  pretrained_model_cfg: zekun-li/geolm-base-cased
+  pretrained_file: null
+  projection_dim: 0
+  sequence_length: 256
+  dropout: 0.1
+  fix_ctx_encoder: false
+  pretrained: true
+datasets:
+  mapqa_0609_socal_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_adjacent.csv
+  mapqa_0609_socal_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_socal_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities_around.csv
+  mapqa_0609_socal_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_amenities.csv
+  mapqa_0609_socal_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_compare_closer.csv
+  mapqa_0609_socal_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_direction_nearest.csv
+  mapqa_0609_socal_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/socal_0607/test/test_socal_dpr_cased_nearest_amenity.csv
+  mapqa_0609_il_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_adjacent.csv
+  mapqa_0609_il_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around_specific.csv
+  mapqa_0609_il_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities_around.csv
+  mapqa_0609_il_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_amenities.csv
+  mapqa_0609_il_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_compare_closer.csv
+  mapqa_0609_il_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_direction_nearest.csv
+  mapqa_0609_il_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/il_0607/test/test_il_dpr_cased_nearest_amenity.csv
+  mapqa_illinois_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/illinois/test_dpr_cased.csv
+  mapqa_test_all:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased.csv
+  mapqa_test_0:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_0.csv
+  mapqa_test_1:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_1.csv
+  mapqa_test_2:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_2.csv
+  mapqa_test_3:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_3.csv
+  mapqa_test_4:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_4.csv
+  mapqa_test_5:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_5.csv
+  mapqa_test_6:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_6.csv
+  mapqa_test_7:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/data/1215/test_dpr_cased_7.csv
+  mapqa_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: /home/zekun/mapqa/DPR/downloads/data/retriever/qas/mapqa-test-1121.csv
+  nq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-test
+  nq_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-train
+  nq_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.nq-dev
+  trivia_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-test
+  trivia_train:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-train
+  trivia_dev:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.trivia-dev
+  webq_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.webq-test
+  curatedtrec_test:
+    _target_: dpr.data.retriever_data.CsvQASrc
+    file: data.retriever.qas.curatedtrec-test
+ctx_sources:
+  dpr_wiki:
+    _target_: dpr.data.retriever_data.CsvCtxSrc
+    file: data.wikipedia_split.psgs_w100
+    id_prefix: 'wiki:'
+  mapqa_socal_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/socal_0607/entities.tsv
+  mapqa_il_entity_ctx:
+    _target_: dpr.data.retriever_data.MapQACsvCtxSrc
+    file: /home/zekun/mapqa/data/il_0607/entities.tsv
+indexers:
+  flat:
+    _target_: dpr.indexer.faiss_indexers.DenseFlatIndexer
+  hnsw:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWFlatIndexer
+  hnsw_sq:
+    _target_: dpr.indexer.faiss_indexers.DenseHNSWSQIndexer
+qa_dataset: mapqa_0609_socal_6
+ctx_datatsets:
+- mapqa_socal_entity_ctx
+encoded_ctx_files:
+- /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+out_file: output.json
+match: string
+n_docs: 100
+validation_workers: 16
+batch_size: 32
+do_lower_case: true
+encoder_path: null
+index_path: null
+kilt_out_file: null
+model_file: /home/zekun/mapqa/DPR/outputs/2024-06-15/08-34-05/weights/dpr_biencoder.17
+validate_as_tables: false
+rpc_retriever_cfg_file: null
+rpc_index_id: null
+use_l2_conversion: false
+use_rpc_meta: false
+rpc_meta_compressed: false
+indexer: flat
+special_tokens: null
+local_rank: -1
+global_loss_buf_sz: 150000
+device: cuda
+distributed_world_size: 1
+distributed_port: null
+no_cuda: false
+n_gpu: 4
+fp16: false
+fp16_opt_level: O1
+
+[2024-06-15 19:32:55,541][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:32:56,481][dpr.models.hf_models][INFO] - Initializing HF GeoLM Encoder. cfg_name=zekun-li/geolm-base-cased
+[2024-06-15 19:32:57,349][root][INFO] - Loading saved model state ...
+[2024-06-15 19:32:57,388][root][INFO] - Selecting standard question encoder
+[2024-06-15 19:32:57,654][root][INFO] - Encoder vector_size=768
+[2024-06-15 19:32:57,654][root][INFO] - qa_dataset: mapqa_0609_socal_6
+[2024-06-15 19:32:57,655][root][INFO] - questions len 45
+[2024-06-15 19:32:57,655][root][INFO] - questions_text len 0
+[2024-06-15 19:32:57,656][root][INFO] - Local Index class <class 'dpr.indexer.faiss_indexers.DenseFlatIndexer'> 
+[2024-06-15 19:32:57,656][root][INFO] - Using special token None
+[2024-06-15 19:32:59,714][root][INFO] - Total encoded queries tensor torch.Size([45, 768])
+[2024-06-15 19:32:59,715][root][INFO] - ctx_sources: <class 'dpr.data.retriever_data.MapQACsvCtxSrc'>
+[2024-06-15 19:32:59,715][root][INFO] - id_prefixes per dataset: [None]
+[2024-06-15 19:32:59,715][root][INFO] - ctx_files_patterns: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:32:59,715][root][INFO] - Embeddings files id prefixes: [None]
+[2024-06-15 19:32:59,715][root][INFO] - Reading all passages data from files: ['/home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0']
+[2024-06-15 19:32:59,715][root][INFO] - Reading file /home/zekun/mapqa/DPR/downloads/data/mapqa_retriever_results/geolm-2024-06-15-08-34-05-socal.pkl_0
+[2024-06-15 19:33:01,624][root][INFO] - data indexed 50000
+[2024-06-15 19:33:01,624][root][INFO] - Total data indexed 50000
+[2024-06-15 19:33:01,959][root][INFO] - data indexed 100000
+[2024-06-15 19:33:01,959][root][INFO] - Total data indexed 100000
+[2024-06-15 19:33:02,238][root][INFO] - data indexed 150000
+[2024-06-15 19:33:02,238][root][INFO] - Total data indexed 150000
+[2024-06-15 19:33:02,519][root][INFO] - data indexed 200000
+[2024-06-15 19:33:02,519][root][INFO] - Total data indexed 200000
+[2024-06-15 19:33:02,908][root][INFO] - data indexed 250000
+[2024-06-15 19:33:02,909][root][INFO] - Total data indexed 250000
+[2024-06-15 19:33:03,190][root][INFO] - data indexed 300000
+[2024-06-15 19:33:03,191][root][INFO] - Total data indexed 300000
+[2024-06-15 19:33:03,358][root][INFO] - data indexed 350000
+[2024-06-15 19:33:03,358][root][INFO] - Total data indexed 350000
+[2024-06-15 19:33:03,641][root][INFO] - data indexed 400000
+[2024-06-15 19:33:03,641][root][INFO] - Total data indexed 400000
+[2024-06-15 19:33:04,261][root][INFO] - data indexed 450000
+[2024-06-15 19:33:04,261][root][INFO] - Total data indexed 450000
+[2024-06-15 19:33:04,545][root][INFO] - data indexed 500000
+[2024-06-15 19:33:04,546][root][INFO] - Total data indexed 500000
+[2024-06-15 19:33:04,839][root][INFO] - data indexed 550000
+[2024-06-15 19:33:04,839][root][INFO] - Total data indexed 550000
+[2024-06-15 19:33:05,001][root][INFO] - data indexed 600000
+[2024-06-15 19:33:05,001][root][INFO] - Total data indexed 600000
+[2024-06-15 19:33:05,120][root][INFO] - data indexed 606770
+[2024-06-15 19:33:05,120][root][INFO] - Total data indexed 606770
+[2024-06-15 19:33:05,121][root][INFO] - Data indexing completed.
+[2024-06-15 19:33:06,117][root][INFO] - index search time: 0.994717 sec.
+[2024-06-15 19:33:06,117][dpr.data.retriever_data][INFO] - Reading file /home/zekun/mapqa/data/socal_0607/entities.tsv
+[2024-06-15 19:33:07,842][root][INFO] - Loaded ctx data: 606770
+[2024-06-15 19:33:07,843][root][INFO] - validating passages. size=606770
+[2024-06-15 19:33:07,843][dpr.data.qa_validation][INFO] - all_docs size 606770
+[2024-06-15 19:33:07,843][dpr.data.qa_validation][INFO] - dpr_all_documents size 606770
+[2024-06-15 19:33:09,052][dpr.data.qa_validation][INFO] - Matching answers in top docs...
+[2024-06-15 19:33:09,074][dpr.data.qa_validation][INFO] - Per question validation results len=45
+[2024-06-15 19:33:09,249][root][INFO] - Validation results: top k documents hits [6, 7, 7, 8, 10, 11, 11, 11, 11, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17]
+[2024-06-15 19:33:09,249][root][INFO] - Validation results: top k documents hits accuracy [0.13333333333333333, 0.15555555555555556, 0.15555555555555556, 0.17777777777777778, 0.2222222222222222, 0.24444444444444444, 0.24444444444444444, 0.24444444444444444, 0.24444444444444444, 0.26666666666666666, 0.26666666666666666, 0.26666666666666666, 0.26666666666666666, 0.26666666666666666, 0.26666666666666666, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.28888888888888886, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3111111111111111, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333, 0.35555555555555557, 0.35555555555555557, 0.35555555555555557, 0.35555555555555557, 0.35555555555555557, 0.35555555555555557, 0.35555555555555557, 0.35555555555555557, 0.37777777777777777, 0.37777777777777777, 0.37777777777777777]
+[2024-06-15 19:33:09,288][root][INFO] - Saved results * scores  to output.json

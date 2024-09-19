@@ -1,33 +1,63 @@
 # @package _group_
 
-mapqa_train_1215:
+
+mapqa_train_geolm_entity_0915_ratio80:
   _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
-  file: '/home/zekun/mapqa/data/1215/train_dpr_cased_train.json'
+  file: '/home/zekun/mapqa/data/socal_0915/train_socal_entity_ratiosplit/subset_80.json'
 
-mapqa_dev_1215:
+
+mapqa_train_geolm_entity_0915_ratio60:
   _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
-  file: '/home/zekun/mapqa/data/1215/train_dpr_cased_val.json'
+  file: '/home/zekun/mapqa/data/socal_0915/train_socal_entity_ratiosplit/subset_60.json'
 
-mapqa_train_1127_Dec13:
+
+mapqa_train_geolm_entity_0915_ratio40:
   _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
-  file: '/home/zekun/mapqa/data/1127/train_dpr_cased.json'
+  file: '/home/zekun/mapqa/data/socal_0915/train_socal_entity_ratiosplit/subset_40.json'
 
 
-mapqa_train_1127:
+mapqa_train_geolm_entity_0915_ratio20:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file: '/home/zekun/mapqa/data/socal_0915/train_socal_entity_ratiosplit/subset_20.json'
+
+
+# ---------------------------------------------
+
+mapqa_train_bert_entity_0915:
   _target_: dpr.data.biencoder_data.JsonQADataset
-  file: '/home/zekun/mapqa/data/1127/train_dpr_cased.json'
+  file: '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_entity_train.json'
 
-mapqa_dev_1127:
+mapqa_val_bert_entity_0915:
   _target_: dpr.data.biencoder_data.JsonQADataset
-  file: '/home/zekun/mapqa/data/1127/test_dpr_cased.json'
+  file: '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_entity_val.json'
 
-# mapqa_train_1114:
-#   _target_: dpr.data.biencoder_data.JsonQADataset
-#   file: '/home/zekun/mapqa/data/1114/train_dpr_cased.json'
+mapqa_train_bert_amenity_0915:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_amenity_train.json'
 
-# mapqa_dev_1114:
-#   _target_: dpr.data.biencoder_data.JsonQADataset
-#   file: '/home/zekun/mapqa/data/1114/test_dpr_cased.json'
+mapqa_val_bert_amenity_0915:
+  _target_: dpr.data.biencoder_data.JsonQADataset
+  file: '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_amenity_val.json'
+
+# ------------------------------------------
+
+mapqa_train_geolm_entity_0915:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file: '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_entity_train.json'
+
+mapqa_val_geolm_entity_0915:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file:  '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_entity_val.json'
+
+mapqa_train_geolm_amenity_0915:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file: '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_amenity_train.json'
+
+mapqa_val_geolm_amenity_0915:
+  _target_: dpr.data.biencoder_data.GeoLMJsonQADataset
+  file:  '/home/zekun/mapqa/data/socal_0915/train/train_socal_dpr_cased_amenity_val.json'
+
+
 
 nq_train:
   _target_: dpr.data.biencoder_data.JsonQADataset

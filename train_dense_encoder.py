@@ -360,14 +360,33 @@ class BiEncoderTrainer(object):
             if isinstance(samples_batch, Tuple):
                 samples_batch, dataset = samples_batch
 
-            biencoder_input = biencoder.create_biencoder_input(
-                samples_batch,
-                self.tensorizer,
-                True,
-                num_hard_negatives,
-                num_other_negatives,
-                shuffle=False,
-            )
+            # biencoder_input = biencoder.create_biencoder_input(
+            #     samples_batch,
+            #     self.tensorizer,
+            #     True,
+            #     num_hard_negatives,
+            #     num_other_negatives,
+            #     shuffle=False,
+            # )
+            if 'geolm' in cfg.encoder.encoder_model_type:
+                biencoder_input = biencoder.create_geolm_biencoder_input(
+                    samples_batch,
+                    self.tensorizer,
+                    True,
+                    num_hard_negatives,
+                    num_other_negatives,
+                    shuffle=False,
+                )
+            else:
+                biencoder_input = biencoder.create_biencoder_input(
+                    samples_batch,
+                    self.tensorizer,
+                    True,
+                    num_hard_negatives,
+                    num_other_negatives,
+                    shuffle=False,
+                )
+
             total_ctxs = len(ctx_represenations)
             ctxs_ids = biencoder_input.context_ids
             ctxs_segments = biencoder_input.ctx_segments
@@ -395,17 +414,36 @@ class BiEncoderTrainer(object):
 
                 q_attn_mask = self.tensorizer.get_attn_mask(q_ids)
                 ctx_attn_mask = self.tensorizer.get_attn_mask(ctx_ids_batch)
-                with torch.no_grad():
-                    q_dense, ctx_dense = self.biencoder(
-                        q_ids,
-                        q_segments,
-                        q_attn_mask,
-                        ctx_ids_batch,
-                        ctx_seg_batch,
-                        ctx_attn_mask,
-                        encoder_type=encoder_type,
-                        representation_token_pos=rep_positions,
-                    )
+                
+
+                if 'geolm' in cfg.encoder.encoder_model_type:
+                    with torch.no_grad():
+                        q_dense, ctx_dense = self.biencoder(
+                            question_ids = input.question_ids,
+                            question_segments = input.question_segments,
+                            question_attn_mask = q_attn_mask,
+                            question_spatial_position_list_x =input.question_spatial_position_list_x,
+                            question_spatial_position_list_y =input.question_spatial_position_list_y,
+                            context_ids = input.context_ids,
+                            ctx_segments =input.ctx_segments,
+                            ctx_attn_mask =ctx_attn_mask,
+                            ctx_spatial_position_list_x =input.ctx_spatial_position_list_x,
+                            ctx_spatial_position_list_y =input.ctx_spatial_position_list_y,
+                            encoder_type=encoder_type,
+                            representation_token_pos=rep_positions,
+                        )
+                else:
+                    with torch.no_grad():
+                        q_dense, ctx_dense = self.biencoder(
+                            q_ids,
+                            q_segments,
+                            q_attn_mask,
+                            ctx_ids_batch,
+                            ctx_seg_batch,
+                            ctx_attn_mask,
+                            encoder_type=encoder_type,
+                            representation_token_pos=rep_positions,
+                        )
 
                 if q_dense is not None:
                     q_represenations.extend(q_dense.cpu().split(1, dim=0))
